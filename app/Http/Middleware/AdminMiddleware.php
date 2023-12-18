@@ -18,9 +18,11 @@ class AdminMiddleware
         $user = auth()->user();
 
         if($user) {
-            if($user->role !== 'admin') abort(403);
+            if($user->role !== 'admin') return response(['error' => 'Forbidden'], 403)
+                                        ->header('Content-Type', 'application/json');
         } else {
-            abort(401);
+            return response(['error' => 'Unauthorized'], 401)
+                ->header('Content-Type', 'application/json');
         }
 
         return $next($request);

@@ -17,4 +17,5 @@ Route::group([ 'namespace' => 'App\Http\Controllers', 'middleware' => 'api', 'pr
 
 Route::group(['namespace' => 'App\Http\Controllers\Admin', 'prefix' => 'admin', 'middleware' => 'admin'], function () {
     Route::get('/users', [UserController::class, 'getUsers']);
+    Route::post('/users', [UserController::class, 'createUser']);
 });
