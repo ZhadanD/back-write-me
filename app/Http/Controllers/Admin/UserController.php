@@ -32,4 +32,11 @@ class UserController extends Controller
 
         return new UserResource($user);
     }
+
+    public function deleteUser($user_id)
+    {
+        $this->service->deleteUser($user_id);
+
+        return response('', 204);
+    }
 }
