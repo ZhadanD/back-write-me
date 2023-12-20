@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Client;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Client\RegisterUserRequest;
+use App\Http\Resources\Client\ProfileResource;
 use App\Http\Resources\Client\UserResource;
 use App\Services\UserService;
 use Illuminate\Http\Request;
@@ -24,5 +25,12 @@ class UserController extends Controller
         $user = $this->service->register($data);
 
         return new UserResource($user);
+    }
+
+    public function getProfile()
+    {
+        $user = $this->service->getProfile();
+
+        return new ProfileResource($user);
     }
 }

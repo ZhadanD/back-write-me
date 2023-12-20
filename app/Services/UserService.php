@@ -44,4 +44,13 @@ class UserService
             throw new HttpResponseException(response()->json(['error' => 'Not Found'], 404));
         }
     }
+
+    public function getProfile()
+    {
+        $user = User::findOrFail(auth()->user()->id);
+
+        $user->friendsCounter = count($user->friends);
+
+        return $user;
+    }
 }

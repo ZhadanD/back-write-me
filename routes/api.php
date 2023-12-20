@@ -12,7 +12,6 @@ Route::group([ 'namespace' => 'App\Http\Controllers', 'middleware' => 'api', 'pr
     Route::post('login', 'AuthController@login');
     Route::post('logout', 'AuthController@logout');
     Route::post('refresh', 'AuthController@refresh');
-    Route::post('me', 'AuthController@me');
 });
 
 Route::group(['namespace' => 'App\Http\Controllers\Client', 'prefix' => 'auth'], function () {
@@ -23,4 +22,8 @@ Route::group(['namespace' => 'App\Http\Controllers\Admin', 'prefix' => 'admin', 
     Route::get('/users', [UserController::class, 'getUsers']);
     Route::post('/users', [UserController::class, 'createUser']);
     Route::delete('/users/{user_id}', [UserController::class, 'deleteUser']);
+});
+
+Route::group(['namespace' => 'App\Http\Controllers\Client', 'middleware' => 'jwt.auth'], function () {
+    Route::get('/users/profile', 'UserController@getProfile');
 });
