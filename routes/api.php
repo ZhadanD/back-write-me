@@ -15,6 +15,10 @@ Route::group([ 'namespace' => 'App\Http\Controllers', 'middleware' => 'api', 'pr
     Route::post('me', 'AuthController@me');
 });
 
+Route::group(['namespace' => 'App\Http\Controllers\Client', 'prefix' => 'auth'], function () {
+    Route::post('register', 'UserController@register');
+});
+
 Route::group(['namespace' => 'App\Http\Controllers\Admin', 'prefix' => 'admin', 'middleware' => 'admin'], function () {
     Route::get('/users', [UserController::class, 'getUsers']);
     Route::post('/users', [UserController::class, 'createUser']);

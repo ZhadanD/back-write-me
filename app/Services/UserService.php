@@ -27,6 +27,15 @@ class UserService
         return $newUser;
     }
 
+    public function register($user)
+    {
+        return User::create([
+            'name' => $user['name'],
+            'email' => $user['email'],
+            'password' => $user['password'],
+        ]);
+    }
+
     public function deleteUser($user_id): void
     {
         try {
