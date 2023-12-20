@@ -53,4 +53,11 @@ class UserService
 
         return $user;
     }
+
+    public function getFriends()
+    {
+        $user = User::findOrFail(auth()->user()->id);
+
+        return $user->friends;
+    }
 }
