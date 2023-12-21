@@ -10,7 +10,7 @@ class UserService
 {
     public function getAllUsers()
     {
-        return User::paginate(10, ['id', 'name', 'email', 'role']);
+        return User::where('id', '!=', auth()->user()->id)->paginate(10, ['id', 'name', 'email', 'role']);
     }
 
     public function createUser($user)
