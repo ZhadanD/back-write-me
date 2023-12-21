@@ -65,4 +65,27 @@ class UserService
     {
         return User::where(['role' => 'user'])->count();
     }
+
+    public function checkFriends($users, $friends)
+    {
+        for ($i = 0; $i < count($friends); $i++) {
+            for ($j = 0; $j < count($users); $j++) {
+                if($friends[$i]->id === $users[$j]->id) $users[$j]->isFriend = true;
+                else $users[$j]->isFriend = false;
+            }
+        }
+
+        return $users;
+    }
+
+    public function searchFriends()
+    {
+        $idCurrentUser = auth()->user()->id;
+
+        $users = User::where('id', '!=', $idCurrentUser)->paginate(10, ['id', 'name']);
+
+        $currentUser = User::find($idCurrentUser);
+
+        return $this->checkFriends($users, $currentUser->friends);
+    }
 }

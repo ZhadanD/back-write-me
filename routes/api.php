@@ -28,4 +28,5 @@ Route::group(['namespace' => 'App\Http\Controllers\Admin', 'prefix' => 'admin', 
 Route::group(['namespace' => 'App\Http\Controllers\Client', 'middleware' => 'jwt.auth'], function () {
     Route::get('/users/profile', 'UserController@getProfile');
     Route::get('/users/friends', 'UserController@getFriends');
+    Route::get('/users/search_friends', 'UserController@searchFriends');
 });

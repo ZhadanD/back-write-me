@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Client\RegisterUserRequest;
 use App\Http\Resources\Client\FriendResource;
 use App\Http\Resources\Client\ProfileResource;
+use App\Http\Resources\Client\SearchFriendResource;
 use App\Http\Resources\Client\UserResource;
 use App\Services\UserService;
 use Illuminate\Http\Request;
@@ -40,5 +41,12 @@ class UserController extends Controller
         $friends = $this->service->getFriends();
 
         return FriendResource::collection($friends);
+    }
+
+    public function searchFriends()
+    {
+        $listUsers = $this->service->searchFriends();
+
+        return SearchFriendResource::collection($listUsers);
     }
 }
