@@ -60,4 +60,9 @@ class UserService
 
         return $user->friends;
     }
+
+    public function getDashboard()
+    {
+        return User::where(['role' => 'user'])->count();
+    }
 }

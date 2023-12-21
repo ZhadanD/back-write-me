@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\CreateUserRequest;
+use App\Http\Resources\Admin\DashboardResource;
 use App\Http\Resources\Admin\UserResource;
 use App\Services\UserService;
 use Illuminate\Http\Request;
@@ -38,5 +39,12 @@ class UserController extends Controller
         $this->service->deleteUser($user_id);
 
         return response('', 204);
+    }
+
+    public function getDashboard()
+    {
+        $dashboard = $this->service->getDashboard();
+
+        return new DashboardResource(['usersCounter' => $dashboard]);
     }
 }

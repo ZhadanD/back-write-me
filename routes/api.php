@@ -19,6 +19,7 @@ Route::group(['namespace' => 'App\Http\Controllers\Client', 'prefix' => 'auth'],
 });
 
 Route::group(['namespace' => 'App\Http\Controllers\Admin', 'prefix' => 'admin', 'middleware' => 'admin'], function () {
+    Route::get('/dashboard', [UserController::class, 'getDashboard']);
     Route::get('/users', [UserController::class, 'getUsers']);
     Route::post('/users', [UserController::class, 'createUser']);
     Route::delete('/users/{user_id}', [UserController::class, 'deleteUser']);
