@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use App\Models\FriendUser;
 use App\Models\User;
 use Illuminate\Http\Exceptions\HttpResponseException;
 use Illuminate\Support\Facades\Hash;
@@ -87,5 +88,20 @@ class UserService
         $currentUser = User::find($idCurrentUser);
 
         return $this->checkFriends($users, $currentUser->friends);
+    }
+
+    public function makeFriend($friendId): void
+    {
+        $idCurrentUser = auth()->user()->id;
+
+        FriendUser::create([
+            'user_id' => $idCurrentUser,
+            'friend_id' => $friendId,
+        ]);
+
+        FriendUser::create([
+            'user_id' => $friendId,
+            'friend_id' => $idCurrentUser,
+        ]);
     }
 }

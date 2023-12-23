@@ -29,4 +29,5 @@ Route::group(['namespace' => 'App\Http\Controllers\Client', 'middleware' => 'jwt
     Route::get('/users/profile', 'UserController@getProfile');
     Route::get('/users/friends', 'UserController@getFriends');
     Route::get('/users/search_friends', 'UserController@searchFriends');
+    Route::post('/users/make_friend', 'UserController@makeFriend');
 });

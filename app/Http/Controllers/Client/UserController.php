@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Client;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Client\MakeFriendRequest;
 use App\Http\Requests\Client\RegisterUserRequest;
 use App\Http\Resources\Client\FriendResource;
 use App\Http\Resources\Client\ProfileResource;
@@ -48,5 +49,14 @@ class UserController extends Controller
         $listUsers = $this->service->searchFriends();
 
         return SearchFriendResource::collection($listUsers);
+    }
+
+    public function makeFriend(MakeFriendRequest $request)
+    {
+        $data = $request->validated();
+
+        $this->service->makeFriend($data['friendId']);
+
+        return response()->json(['data' => ['success' => 'Вы успешно подружились!']], 201);
     }
 }
