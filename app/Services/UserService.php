@@ -69,10 +69,11 @@ class UserService
 
     public function checkFriends($users, $friends)
     {
+        for ($k = 0; $k < count($users); $k++) $users[$k]->isFriend = false;
+
         for ($i = 0; $i < count($friends); $i++) {
             for ($j = 0; $j < count($users); $j++) {
                 if($friends[$i]->id === $users[$j]->id) $users[$j]->isFriend = true;
-                else $users[$j]->isFriend = false;
             }
         }
 
