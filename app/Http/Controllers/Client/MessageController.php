@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Client;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Client\SendMessageRequest;
+use App\Http\Resources\Client\ChatResource;
 use App\Http\Resources\Client\MessageResource;
 use App\Services\MessageService;
 use Illuminate\Http\Request;
@@ -24,5 +25,12 @@ class MessageController extends Controller
         $message = $this->service->sendMessage($data);
 
         return new MessageResource($message);
+    }
+
+    public function getChats()
+    {
+        $chats = $this->service->getChats();
+
+        return ChatResource::collection($chats);
     }
 }
