@@ -26,8 +26,13 @@ Route::group(['namespace' => 'App\Http\Controllers\Admin', 'prefix' => 'admin', 
 });
 
 Route::group(['namespace' => 'App\Http\Controllers\Client', 'middleware' => 'jwt.auth'], function () {
-    Route::get('/users/profile', 'UserController@getProfile');
-    Route::get('/users/friends', 'UserController@getFriends');
-    Route::get('/users/search_friends', 'UserController@searchFriends');
-    Route::post('/users/make_friend', 'UserController@makeFriend');
+    Route::group(['prefix' => 'users'], function () {
+        Route::get('/profile', 'UserController@getProfile');
+        Route::get('/friends', 'UserController@getFriends');
+        Route::get('/search_friends', 'UserController@searchFriends');
+        Route::post('/make_friend', 'UserController@makeFriend');
+    });
+    Route::group(['prefix' => 'messages'], function () {
+        Route::post('', 'MessageController@sendMessage');
+    });
 });
