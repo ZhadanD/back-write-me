@@ -4,6 +4,8 @@ namespace App\Services;
 
 use App\Models\Chat;
 use App\Models\Message;
+use Illuminate\Http\Exceptions\HttpResponseException;
+use Illuminate\Support\Facades\DB;
 
 class MessageService
 {
@@ -57,10 +59,8 @@ class MessageService
         return $this->checkChats($chats, $currentUserId);
     }
 
-    public function checkMessages($messages)
+    public function checkMessages($messages, $currentUserId)
     {
-        $currentUserId = auth()->user()->id;
-
         for ($i = 0; $i < count($messages); $i++) {
             if($messages[$i]->sender_id === $currentUserId) $messages[$i]->my = true;
             else $messages[$i]->my = false;
@@ -71,8 +71,17 @@ class MessageService
 
     public function getChat($chatId)
     {
-        $chat = Chat::findOrFail($chatId);
+        $currentUserId = auth()->user()->id;
 
-        return $this->checkMessages($chat->messages);
+        $chat = Chat::where(function ($query) use ($currentUserId) {
+            $query->orWhere('first_participant_id', '=', $currentUserId)
+                  ->orWhere('second_participant_id', '=', $currentUserId);
+            })
+            ->where('id', $chatId)
+            ->first();
+
+        if(!$chat) throw new HttpResponseException(response()->json(['error' => 'Not Found'], 404));
+
+        return $this->checkMessages($chat->messages, $currentUserId);
     }
 }
