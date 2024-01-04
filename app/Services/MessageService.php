@@ -38,8 +38,14 @@ class MessageService
     public function checkChats($chats, $currentUserId)
     {
         for ($i = 0; $i < count($chats); $i++) {
-            if($chats[$i]->first_id === $currentUserId) $chats[$i]->name_interlocutor = $chats[$i]->second_name;
-            else if($chats[$i]->second_id === $currentUserId) $chats[$i]->name_interlocutor = $chats[$i]->first_name;
+            if($chats[$i]->first_id === $currentUserId) {
+                $chats[$i]->name_interlocutor = $chats[$i]->second_name;
+                $chats[$i]->interlocutor_id = $chats[$i]->second_id;
+            }
+            else if($chats[$i]->second_id === $currentUserId) {
+                $chats[$i]->name_interlocutor = $chats[$i]->first_name;
+                $chats[$i]->interlocutor_id = $chats[$i]->first_id;
+            }
         }
 
         return $chats;
