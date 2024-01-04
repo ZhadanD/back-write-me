@@ -6,8 +6,8 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Client\SendMessageRequest;
 use App\Http\Resources\Client\ChatResource;
 use App\Http\Resources\Client\MessageResource;
+use App\Http\Resources\Client\MessagesChatResource;
 use App\Services\MessageService;
-use Illuminate\Http\Request;
 
 class MessageController extends Controller
 {
@@ -32,5 +32,12 @@ class MessageController extends Controller
         $chats = $this->service->getChats();
 
         return ChatResource::collection($chats);
+    }
+
+    public function getChat($chatId)
+    {
+        $chat = $this->service->getChat($chatId);
+
+        return MessagesChatResource::collection($chat);
     }
 }

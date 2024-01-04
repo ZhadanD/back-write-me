@@ -12,4 +12,9 @@ class Chat extends Model
     protected $table = 'chats';
 
     protected $guarded = false;
+
+    public function messages()
+    {
+        return $this->hasMany(Message::class, 'chat_id', 'id');
+    }
 }

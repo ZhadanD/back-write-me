@@ -35,5 +35,6 @@ Route::group(['namespace' => 'App\Http\Controllers\Client', 'middleware' => 'jwt
     Route::group(['prefix' => 'messages'], function () {
         Route::post('', 'MessageController@sendMessage');
         Route::get('/chats', 'MessageController@getChats');
+        Route::get('/chats/{chatId}', 'MessageController@getChat');
     });
 });

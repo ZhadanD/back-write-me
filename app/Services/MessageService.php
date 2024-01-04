@@ -56,4 +56,23 @@ class MessageService
 
         return $this->checkChats($chats, $currentUserId);
     }
+
+    public function checkMessages($messages)
+    {
+        $currentUserId = auth()->user()->id;
+
+        for ($i = 0; $i < count($messages); $i++) {
+            if($messages[$i]->sender_id === $currentUserId) $messages[$i]->my = true;
+            else $messages[$i]->my = false;
+        }
+
+        return $messages;
+    }
+
+    public function getChat($chatId)
+    {
+        $chat = Chat::findOrFail($chatId);
+
+        return $this->checkMessages($chat->messages);
+    }
 }
